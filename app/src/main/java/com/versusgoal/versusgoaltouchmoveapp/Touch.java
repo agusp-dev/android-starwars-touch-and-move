@@ -31,8 +31,6 @@ public class Touch implements View.OnTouchListener {
             case MotionEvent.ACTION_MOVE:
                 layoutParams.leftMargin = getXposition((x - xDelta), v.getWidth(), parent.getWidth());
                 layoutParams.topMargin = getYposition((y - yDelta), v.getHeight(), parent.getHeight());
-                Log.d("VersusgoalOnTouch", "x: " + layoutParams.leftMargin);
-                Log.d("VersusgoalOnTouch", "y: " + layoutParams.topMargin);
                 v.setLayoutParams(layoutParams);
                 break;
         }
@@ -56,7 +54,4 @@ public class Touch implements View.OnTouchListener {
                 : (y + viewHeight > parentHeight) ? (parentHeight - viewHeight) //excede limite inferior
                 : y; //no excede ningun limite
     }
-
-
-
 }

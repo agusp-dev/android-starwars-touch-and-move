@@ -1,32 +1,21 @@
 package com.versusgoal.versusgoaltouchmoveapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private ViewGroup rlMain;
-    private ImageView ivVersusgoal1;
-    private ImageView ivVersusgoal2;
-
-    private int xDelta;
-    private int yDelta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar_versusgoal);
         rlMain = (ViewGroup) findViewById(R.id.activity_main_rlMain);
-        ivVersusgoal1 = (ImageView) findViewById(R.id.activity_main_iv1);
-        ivVersusgoal2 = (ImageView) findViewById(R.id.activity_main_iv2);
-
-        ivVersusgoal1.setOnTouchListener(new Touch(rlMain));
-        ivVersusgoal2.setOnTouchListener(new Touch(rlMain));
     }
 
     private void setToolbar() {
@@ -78,27 +62,22 @@ public class MainActivity extends AppCompatActivity {
         createNewView();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void createNewView() {
-
-        ACA QUEDE
-
-        ImageView iv;
-
-        LayoutInflater inflater = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        iv = (ImageView) inflater.inflate(R.layout.view_versusgoal, null);
-
-
+        ImageView iv = createNewImageView();
         rlMain.addView(iv);
-        iv.setOnTouchListener(new Touch(rlMain));
+        iv.getLayoutParams().width = dpToPx(56);
+        iv.getLayoutParams().height = dpToPx(56);
+        iv.setOnTouchListener(
+                new Touch(rlMain));
     }
 
+    private ImageView createNewImageView() {
+        LayoutInflater inflater = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        return (ImageView) inflater.inflate(R.layout.view_versusgoal, null);
+    }
 
-
-
-
-
-
-    private void showMsg(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    private int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 }
