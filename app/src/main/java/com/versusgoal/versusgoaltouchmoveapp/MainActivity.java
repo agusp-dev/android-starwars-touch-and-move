@@ -1,9 +1,11 @@
 package com.versusgoal.versusgoaltouchmoveapp;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -20,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private ViewGroup rlMain;
-    private ImageView ivVersusgoal;
+    private ImageView ivVersusgoal1;
+    private ImageView ivVersusgoal2;
 
     private int xDelta;
     private int yDelta;
@@ -42,9 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar_versusgoal);
         rlMain = (ViewGroup) findViewById(R.id.activity_main_rlMain);
-        ivVersusgoal = (ImageView) findViewById(R.id.imageview_versusgoal);
+        ivVersusgoal1 = (ImageView) findViewById(R.id.activity_main_iv1);
+        ivVersusgoal2 = (ImageView) findViewById(R.id.activity_main_iv2);
 
-        ivVersusgoal.setOnTouchListener(onTouchListener());
+        ivVersusgoal1.setOnTouchListener(new Touch(rlMain));
+        ivVersusgoal2.setOnTouchListener(new Touch(rlMain));
     }
 
     private void setToolbar() {
@@ -70,63 +75,22 @@ public class MainActivity extends AppCompatActivity {
      * Click en item de menu.
      */
     private void onAddViewMenuItemClick() {
-        //todo
+        createNewView();
     }
 
-    /**
-     * Listener de view.
-     */
-    private View.OnTouchListener onTouchListener() {
+    private void createNewView() {
 
-        return new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
+        ACA QUEDE
 
-                RelativeLayout.LayoutParams layoutParams = getLayoutParams(v);
-                final int x = (int) event.getRawX();
-                final int y = (int) event.getRawY();
+        ImageView iv;
 
-                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+        LayoutInflater inflater = (LayoutInflater)getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        iv = (ImageView) inflater.inflate(R.layout.view_versusgoal, null);
 
-                    case MotionEvent.ACTION_DOWN:
-                        xDelta = x - layoutParams.leftMargin;
-                        yDelta = y - layoutParams.topMargin;
-                        break;
 
-                    case MotionEvent.ACTION_MOVE:
-                        layoutParams.leftMargin = getXposition((x - xDelta), v.getWidth(), rlMain.getWidth());
-                        layoutParams.topMargin = getYposition((y - yDelta), v.getHeight(), rlMain.getHeight());
-                        Log.d("VersusgoalOnTouch", "x: " + layoutParams.leftMargin);
-                        Log.d("VersusgoalOnTouch", "y: " + layoutParams.topMargin);
-                        v.setLayoutParams(layoutParams);
-                        break;
-                }
-
-                rlMain.invalidate();
-                return true;
-            }
-        };
+        rlMain.addView(iv);
+        iv.setOnTouchListener(new Touch(rlMain));
     }
-
-    private RelativeLayout.LayoutParams getLayoutParams(View view) {
-        return (RelativeLayout.LayoutParams) view.getLayoutParams();
-    }
-
-    private int getXposition(int x, int viewWidth, int parentWidth) {
-        return (x < 0) ? 0 //excede limite izquierdo
-                : (x + viewWidth > parentWidth) ? (parentWidth - viewWidth) //excede limite derecho
-                : x; //no excede ningun limite
-    }
-
-    private int getYposition(int y, int viewHeight, int parentHeight) {
-        return (y < 0) ? 0 //excede limite superior
-                : (y + viewHeight > parentHeight) ? (parentHeight - viewHeight) //excede limite inferior
-                : y; //no excede ningun limite
-    }
-
-
-
-
 
 
 
