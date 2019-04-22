@@ -44,16 +44,6 @@ public class MainActivity extends AppCompatActivity {
         rlMain = (ViewGroup) findViewById(R.id.activity_main_rlMain);
         ivVersusgoal = (ImageView) findViewById(R.id.imageview_versusgoal);
 
-//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-//                ivVersusgoal.getLayoutParams());
-//        layoutParams.leftMargin = 300;
-//        layoutParams.topMargin = 50;
-//        layoutParams.bottomMargin = -250;
-//        layoutParams.rightMargin = -250;
-//        ivVersusgoal.setLayoutParams(layoutParams);
-
-        //rlMain.addView(ivVersusgoal);
-
         ivVersusgoal.setOnTouchListener(onTouchListener());
     }
 
@@ -92,49 +82,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
+                RelativeLayout.LayoutParams layoutParams = getLayoutParams(v);
                 final int x = (int) event.getRawX();
                 final int y = (int) event.getRawY();
-
-//                Log.d("VersusgoalOnTouch", "x: " + x);
-//                Log.d("VersusgoalOnTouch", "y: " + y);
-
 
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
                     case MotionEvent.ACTION_DOWN:
-                        RelativeLayout.LayoutParams layoutParams1 = getLayoutParams(v);
-                        xDelta = x - layoutParams1.leftMargin;
-                        yDelta = y - layoutParams1.topMargin;
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        break;
-                    case MotionEvent.ACTION_POINTER_DOWN:
-                        break;
-                    case MotionEvent.ACTION_POINTER_UP:
+                        xDelta = x - layoutParams.leftMargin;
+                        yDelta = y - layoutParams.topMargin;
                         break;
 
                     case MotionEvent.ACTION_MOVE:
-
-                        RelativeLayout.LayoutParams layoutParams2 = getLayoutParams(v);
-
-                        layoutParams2.leftMargin = (x - xDelta > 0) ? (x - xDelta) : 0;
-                        layoutParams2.topMargin = (y - yDelta > 0) ? (y - yDelta) : 0;
-                        layoutParams2.rightMargin = -350;
-                        layoutParams2.bottomMargin = 100;
-                        v.setLayoutParams(layoutParams2);
-
-                        Log.d("VersusgoalOnTouch", "leftMargin: " + layoutParams2.leftMargin);
-                        Log.d("VersusgoalOnTouch", "topMargin: " + layoutParams2.topMargin);
-                        Log.d("VersusgoalOnTouch", "rightMargin: " + layoutParams2.rightMargin);
-                        Log.d("VersusgoalOnTouch", "bottomMargin: " + layoutParams2.bottomMargin);
-
-
-//                        layoutParams2.leftMargin = x - xDelta;
-//                        layoutParams2.topMargin = y - yDelta;
-//                        layoutParams2.rightMargin = 0;
-//                        layoutParams2.bottomMargin = 0;
-//                        v.setLayoutParams(layoutParams2);
+                        layoutParams.leftMargin = getXposition((x - xDelta), v.getWidth(), rlMain.getWidth());
+                        layoutParams.topMargin = getYposition((y - yDelta), v.getHeight(), rlMain.getHeight());
+                        Log.d("VersusgoalOnTouch", "x: " + layoutParams.leftMargin);
+                        Log.d("VersusgoalOnTouch", "y: " + layoutParams.topMargin);
+                        v.setLayoutParams(layoutParams);
                         break;
                 }
 
@@ -146,6 +110,18 @@ public class MainActivity extends AppCompatActivity {
 
     private RelativeLayout.LayoutParams getLayoutParams(View view) {
         return (RelativeLayout.LayoutParams) view.getLayoutParams();
+    }
+
+    private int getXposition(int x, int viewWidth, int parentWidth) {
+        return (x < 0) ? 0 //excede limite izquierdo
+                : (x + viewWidth > parentWidth) ? (parentWidth - viewWidth) //excede limite derecho
+                : x; //no excede ningun limite
+    }
+
+    private int getYposition(int y, int viewHeight, int parentHeight) {
+        return (y < 0) ? 0 //excede limite superior
+                : (y + viewHeight > parentHeight) ? (parentHeight - viewHeight) //excede limite inferior
+                : y; //no excede ningun limite
     }
 
 
