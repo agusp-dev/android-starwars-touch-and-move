@@ -10,8 +10,7 @@
   <color name="colorMainBackground">#FFFFFF</color>
 
   <color name="colorMainWhite">#FFFFFF</color>
-  <color name="colorSoftGrey">#CCCCCC</color>
-
+  <color name="colorSoftGrey">#E2E2E2</color>
 
   <color name="colorLukeBackground">#1C488A</color>
   <color name="colorLukePressedBackground">#2459AA</color>
@@ -19,6 +18,5 @@
   <color name="colorLeiaPressedBackground">#F135D8</color>
   <color name="colorChewaccaBackground">#8A5617</color>
   <color name="colorChewaccaPressedBackground">#AC6C1E</color>
-
 
 </resources>
