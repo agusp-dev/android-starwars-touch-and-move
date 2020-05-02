@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">VersusgoalTouch&amp;MoveApp</string>
+  <string name="app_name">StarwarsTouch&amp;Move</string>
 
-    <string name="lb_add_view">Agregar Vista</string>
+  <string name="bt_luke">Luke</string>
+  <string name="bt_leia">Leia</string>
+  <string name="bt_chewacca">Chewacca</string>
 
 </resources>
